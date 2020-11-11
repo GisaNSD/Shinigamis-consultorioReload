@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\Coder;
-use phpDocumentor\Reflection\Location; // QUE ES ESTO?
+use phpDocumentor\Reflection\Location; 
 
 class CodersController
 {

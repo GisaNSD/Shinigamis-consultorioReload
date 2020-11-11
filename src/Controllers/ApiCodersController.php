@@ -44,10 +44,26 @@ class ApiCodersController
     public function index(): void
     {
         $codersList = Coder::all();
+                
+        $newCodersList =[];
 
-        new View("CoderList", [
-            "students_db" => $codersList,
-        ]);
+        foreach ($codersList as $coder) {
+            
+            $newEntry = [
+
+            "id"=>$coder->getId(), 
+            "name"=>$coder->getName(), 
+            "subject"=>$coder->getSubject(),
+            "created"=>$coder->getCreatedAt()
+            ];
+            array_push($newCodersList, $newEntry);
+        }
+       
+        echo json_encode($newCodersList);
+
+        // new View("CoderList", [
+        //     "students_db" => $codersList,
+        // ]);
     }
 
     public function create(): void
