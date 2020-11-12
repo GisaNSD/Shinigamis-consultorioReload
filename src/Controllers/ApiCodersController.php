@@ -82,9 +82,9 @@ class ApiCodersController
     public function delete($id)
     {
         $coderToDelete = Coder::findById($id);
-        $coderToDelete->delete();
-
-        $this->index();
+        
+        // $coderToDelete->delete();
+        // $this->index();
     }
     
     public function edit($id)
