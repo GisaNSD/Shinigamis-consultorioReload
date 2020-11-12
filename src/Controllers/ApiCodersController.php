@@ -61,12 +61,26 @@ class ApiCodersController
        
         echo json_encode($newCodersList);
 
-        // new View("CoderList", [
-        //     "students_db" => $codersList,
-        // ]);
+
+        $newCodersList = [];
+
+        foreach ($codersList as $coder) {
+
+            $newEntry = [
+                "id"=>$coder->getId(),
+                "name"=>$coder->getName(),
+                "subjet"=>$coder->getSubject(),
+                "created"=>$coder->getCreatedAt()
+            ];
+            array_push($newCodersList, $newEntry);
+
+        }
+
+        echo json_encode($newCodersList);
+
     }
 
-    public function create(): void
+   public function create(): void
     {
         new View("CreateCoder");
     }
@@ -82,9 +96,19 @@ class ApiCodersController
     public function delete($id)
     {
         $coderToDelete = Coder::findById($id);
+
+        $coderDelete= [
+            "id"=>$coderToDelete->getId(),
+            "name"=>$coderToDelete->getName(),
+            "subjet"=>$coderToDelete->getSubject(),
+            "created"=>$coderToDelete->getCreatedAt()
+
+        ];
+
+        echo json_encode($coderDelete);
+
         $coderToDelete->delete();
 
-        $this->index();
     }
     
     public function edit($id)
