@@ -55,7 +55,7 @@ class ApiCodersController
             "name"=>$coder->getName(), 
             "subject"=>$coder->getSubject(),
             "created"=>$coder->getCreatedAt()
-            ];
+            ]; 
             array_push($newCodersList, $newEntry);
         }
        
