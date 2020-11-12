@@ -58,10 +58,9 @@ class ApiCodersController
             ]; 
             array_push($newCodersList, $newEntry);
         }
-       
+        
         echo json_encode($newCodersList);
-
-
+        
         $newCodersList = [];
 
         foreach ($codersList as $coder) {
