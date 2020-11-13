@@ -104,4 +104,15 @@ class Coder
     {
         $this->database->mysql->query("UPDATE `students_db` SET `name` =  '{$this->name}', `subject` = '{$this->subject}' WHERE `id` = {$this->id}");
     }
+
+    public static function findLastCoder(): Coder
+    {
+        $database = new Database();
+        $query = $database->mysql->query("SELECT * FROM `students_db` WHERE `id` = (SELECT max(id) FROM `students_db`)");
+        $result = $query->fetchAll();
+        
+        var_dump($result); 
+
+        return new self($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
+    }
 }

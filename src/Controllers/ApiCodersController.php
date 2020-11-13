@@ -66,17 +66,18 @@ class ApiCodersController
         // ]);
     }
 
-    public function create(): void
-    {
-        new View("CreateCoder");
+    public function create(array $request): void
+    {   
+        //new View("CreateCoder");
     }
 
     public function store(array $request): void
     {
         $newCoder = new Coder($request["name"], $request["subject"]);
         $newCoder->save();
-
-        $this->index();
+        $lastCoder = Coder::findLastCoder();
+        var_dump($lastCoder);
+        //$this->index();
     }
 
     public function delete($id)
