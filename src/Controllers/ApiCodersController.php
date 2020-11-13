@@ -11,10 +11,10 @@ class ApiCodersController
 
     public function __construct()
     {
-        if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "create")) {
+        /* if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "create")) {
             $this->create();
             return;
-        }
+        } */
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "store")) {
             $this->store($_POST);
@@ -80,17 +80,26 @@ class ApiCodersController
 
     }
 
-   public function create(): void
+   /* public function create(): void
     {
-        new View("CreateCoder");
-    }
+        // new View("CreateCoder");
+    } */
 
     public function store(array $request): void
     {
         $newCoder = new Coder($request["name"], $request["subject"]);
         $newCoder->save();
 
-        $this->index();
+        $lastCoder = Coder::findLastCoder();
+        
+        $lastCoder = [
+            "id" => $lastCoder->getId(),
+            "name" => $lastCoder->getName(),
+            "subject" => $lastCoder->getSubject(),
+            "createAt" => $lastCoder->getCreatedAt()
+        ];
+        
+        echo json_encode($lastCoder);
     }
 
     public function delete($id)
