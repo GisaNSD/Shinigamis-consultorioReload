@@ -24,7 +24,7 @@ class Database
     {
         $data = file_get_contents("src/DbConnection.json");
         $data = json_decode($data, true);
-
+        
         $host = $data['myapp']['master']['hosts'];
         $user = $data['myapp']['master']['user'];
         $pass = $data['myapp']['master']['password'];
