@@ -129,7 +129,6 @@ class ApiCodersController
         $coderToUpdate->editSubject($request["subject"]);
         $coderToUpdate->update();
         
-        //
-        //$this->index();
+        
     }
 }
