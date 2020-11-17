@@ -17,8 +17,10 @@ class ApiCodersController
         } */
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "store")) {
-            $this->store($_POST);
-            return;
+            $data = $_POST;
+            var_dump($data);
+            // $this->store($data);
+            // return;
         }
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "edit")) {
@@ -70,27 +72,36 @@ class ApiCodersController
 
     public function store(array $request): void
     {
-        $newCoder = new Coder($request["name"], $request["subject"]);
-        $newCoder->save();
+        var_dump($request);
+        // $newCoder = new Coder($request["name"], $request["subject"]);
+        // $newCoder->save();
 
-        $lastCoder = Coder::findLastCoder();
+        // $lastCoder = Coder::findLastCoder();
         
-        $lastCoder = [
-            "id" => $lastCoder->getId(),
-            "name" => $lastCoder->getName(),
-            "subject" => $lastCoder->getSubject(),
-            "createAt" => $lastCoder->getCreatedAt()
-        ];
+        // $lastCoder = [
+        //     "id" => $lastCoder->getId(),
+        //     "name" => $lastCoder->getName(),
+        //     "subject" => $lastCoder->getSubject(),
+        //     "createAt" => $lastCoder->getCreatedAt()
+        // ];
         
-        echo json_encode($lastCoder);
+        // echo json_encode($lastCoder);
     }
 
     public function delete($id)
     {
         $coderToDelete = Coder::findById($id);
-        $coderToDelete->delete();
 
-        $this->index();
+        $coderDeleted =  [
+            "id" => $coderToDelete->getId(),
+            "name" => $coderToDelete->getName(),
+            "subject" => $coderToDelete->getSubject(),
+            "createat" => $coderToDelete->getCreatedAt()
+        ];
+        
+        echo json_encode($coderDeleted);
+
+        $coderToDelete->delete();
     }
     
     public function edit($id)
