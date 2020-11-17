@@ -11,10 +11,10 @@ class ApiCodersController
 
     public function __construct()
     {
-        if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "create")) {
+        /* if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "create")) {
             $this->create();
             return;
-        }
+        } */
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "store")) {
             $this->store($_POST);
@@ -48,7 +48,7 @@ class ApiCodersController
         $newCodersList =[];
 
         foreach ($codersList as $coder) {
-            
+                
             $newEntry = [
 
             "id"=>$coder->getId(), 
@@ -61,22 +61,6 @@ class ApiCodersController
         
         echo json_encode($newCodersList);
         
-        $newCodersList = [];
-
-        foreach ($codersList as $coder) {
-
-            $newEntry = [
-                "id"=>$coder->getId(),
-                "name"=>$coder->getName(),
-                "subjet"=>$coder->getSubject(),
-                "created"=>$coder->getCreatedAt()
-            ];
-            array_push($newCodersList, $newEntry);
-
-        }
-
-        echo json_encode($newCodersList);
-
     }
 
    public function create(): void
@@ -89,25 +73,24 @@ class ApiCodersController
         $newCoder = new Coder($request["name"], $request["subject"]);
         $newCoder->save();
 
-        $this->index();
+        $lastCoder = Coder::findLastCoder();
+        
+        $lastCoder = [
+            "id" => $lastCoder->getId(),
+            "name" => $lastCoder->getName(),
+            "subject" => $lastCoder->getSubject(),
+            "createAt" => $lastCoder->getCreatedAt()
+        ];
+        
+        echo json_encode($lastCoder);
     }
 
     public function delete($id)
     {
         $coderToDelete = Coder::findById($id);
-
-        $coderDelete= [
-            "id"=>$coderToDelete->getId(),
-            "name"=>$coderToDelete->getName(),
-            "subjet"=>$coderToDelete->getSubject(),
-            "created"=>$coderToDelete->getCreatedAt()
-
-        ];
-
-        echo json_encode($coderDelete);
-
         $coderToDelete->delete();
 
+        $this->index();
     }
     
     public function edit($id)
