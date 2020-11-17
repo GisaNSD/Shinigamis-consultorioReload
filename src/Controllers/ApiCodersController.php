@@ -106,19 +106,30 @@ class ApiCodersController
     
     public function edit($id)
     {
+        
         $coderToEdit = Coder::findById($id);
-        new View("EditCoder", ["coder" => $coderToEdit]);
+
+        $coderArrayToEdit = [
+            "id"=>$coderToEdit->getId(),
+            "name"=>$coderToEdit->getName(),
+            "subject"=>$coderToEdit->getSubject(),
+            "createdat"=> $coderToEdit->getCreatedAt()
+        ];
+        
+       //new View("EditCoder", ["coder" => $coderToEdit]);
+        echo json_encode($coderArrayToEdit);
     }
 
     public function update(array $request, $id)
-    {
+    {   
         $coderToUpdate = Coder::findById($id);
-        $coderToUpdate->rename($coderToUpdate["name"]);
-        $coderToUpdate->editSubject($coderToUpdate["subject"]);
-
-        echo json_encode($coderToUpdate);
-
+        var_dump($coderToUpdate->getName());
+        
+        $coderToUpdate->rename($request["name"]);
+        $coderToUpdate->editSubject($request["subject"]);
         $coderToUpdate->update();
         
+        //
+        //$this->index();
     }
 }
