@@ -73,19 +73,19 @@ class ApiCodersController
     public function store(array $request): void
     {
         var_dump($request);
-        // $newCoder = new Coder($request["name"], $request["subject"]);
-        // $newCoder->save();
+         $newCoder = new Coder($request["name"], $request["subject"]);
+         $newCoder->save();
 
-        // $lastCoder = Coder::findLastCoder();
+         $lastCoder = Coder::findLastCoder();
         
-        // $lastCoder = [
-        //     "id" => $lastCoder->getId(),
-        //     "name" => $lastCoder->getName(),
-        //     "subject" => $lastCoder->getSubject(),
-        //     "createAt" => $lastCoder->getCreatedAt()
-        // ];
+         $lastCoder = [
+             "id" => $lastCoder->getId(),
+             "name" => $lastCoder->getName(),
+             "subject" => $lastCoder->getSubject(),
+             "createAt" => $lastCoder->getCreatedAt()
+         ];
         
-        // echo json_encode($lastCoder);
+         echo json_encode($lastCoder);
     }
 
     public function delete($id)
@@ -113,10 +113,12 @@ class ApiCodersController
     public function update(array $request, $id)
     {
         $coderToUpdate = Coder::findById($id);
-        $coderToUpdate->rename($request["name"]);
-        $coderToUpdate->editSubject($request["subject"]);
-        $coderToUpdate->update();
+        $coderToUpdate->rename($coderToUpdate["name"]);
+        $coderToUpdate->editSubject($coderToUpdate["subject"]);
 
-        $this->index();
+        echo json_encode($coderToUpdate);
+
+        $coderToUpdate->update();
+        
     }
 }
