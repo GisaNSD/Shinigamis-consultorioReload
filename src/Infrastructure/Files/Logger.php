@@ -7,7 +7,7 @@ class Logger {
     private $message;
     private $userIP;
     
-    public function __construct($date, $message, $userIP){
+    public function __construct($date = "", $message = "", $userIP = ""){
 
         $this->date = $date;
         $this->message = $message;
@@ -20,7 +20,20 @@ class Logger {
         $this->date = date ("d-m-y hour: h:m:s");
         return $this->date;
     }
-}
+
+    public function getMessage($message){
+
+        $this->message = $message;
+        return $this-> message;
+    }
+
+    public function getUserIP(){
+
+        $this->userIP = $_SERVER['REMOTE_ADDR'];
+                return $this-> userIP;
+    }
+
+    }
 
 
 
