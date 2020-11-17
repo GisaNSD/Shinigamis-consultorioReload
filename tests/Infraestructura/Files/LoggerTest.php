@@ -27,14 +27,16 @@ class LoggerTest extends TestCase
 		$this->assertIsString($result);
 	}
 
-	public function test_userIP()
+/*	public function test_userIP()
 	{
 		$logger= new Logger();
 
 		$result= $logger->getUserIP();
 		
 		$this->assertEquals(Null, $result);
-	}
+	} */
+
+	
 
 
 

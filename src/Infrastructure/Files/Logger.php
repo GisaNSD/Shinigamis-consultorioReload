@@ -33,6 +33,20 @@ class Logger {
                 return $this-> userIP;
     }
 
+    public function openFile(){
+
+        $path = "src/Infrastructure/Files/logs.log";
+        $logfile= fopen($path, "a");
+
+        return $logfile;
+    }
+
+    public function writeInFile(){
+
+        $logFile= $this-> openFile();
+        $data= fwrite($logFile, $this->getDate().$this->getMessage("Pepe").$this->getUserIP());
+    }
+
     }
 
 
