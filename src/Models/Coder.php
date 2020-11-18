@@ -3,7 +3,6 @@
 
 namespace App\Models;
 
-
 use App\Database;
 
 class Coder
@@ -112,4 +111,5 @@ class Coder
     {
         $this->database->mysql->query("UPDATE `students_db` SET `name` =  '{$this->name}', `subject` = '{$this->subject}' WHERE `id` = {$this->id}");
     }
-}
+
+  }

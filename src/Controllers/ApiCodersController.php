@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\Coder;
-use phpDocumentor\Reflection\Location; // QUE ES ESTO?
+use phpDocumentor\Reflection\Location;
 use App\Domain\Contracts\IWriteInFiles;
 use App\Infrastructure\Files\Logger;
 
@@ -76,7 +76,6 @@ class ApiCodersController implements IWriteInFiles
 
     public function store(array $request): void
     {
-        var_dump($request);
          $newCoder = new Coder($request["name"], $request["subject"]);
          $newCoder->save();
 

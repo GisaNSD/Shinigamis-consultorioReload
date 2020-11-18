@@ -1,7 +1,7 @@
 <?php 
 
 
-namespace Tests;
+namespace Tests\Unitarios\Infrastructure\File;
 
 use PHPUnit\Framework\TestCase;
 use App\Infrastructure\Files\Logger;
