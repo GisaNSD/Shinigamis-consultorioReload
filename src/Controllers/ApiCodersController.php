@@ -65,8 +65,9 @@ class ApiCodersController implements IWriteInFiles
         
         echo json_encode($newCodersList);
 
-        WriteInLoggerFiles("Listando Coders");
+        $this->WriteInFiles("Listando Coders");
         
+
     }
 
    public function create(): void
@@ -134,6 +135,13 @@ class ApiCodersController implements IWriteInFiles
         $coderToUpdate->update();
         
         
+    }
+
+    public function WriteInFiles($message){
+
+        $logger= new logger();
+        $logger->writeInFile($message);
+
     }
 
 }

@@ -4,7 +4,7 @@ namespace App\Domain\Contracts;
 
 Interface IWriteInFiles{
 
-    public function WriteInLoggerFiles($message);
+    public function WriteInFiles($message);
 }
 
 ?>
