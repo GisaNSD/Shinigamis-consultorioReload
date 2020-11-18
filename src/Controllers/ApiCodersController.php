@@ -60,26 +60,32 @@ class ApiCodersController
             ]; 
             array_push($newCodersList, $newEntry);
         }
-       
+        
         echo json_encode($newCodersList);
+        
+    }
+
+   public function create(): void
+    {
+        new View("CreateCoder");
     }
 
     public function store(array $request): void
     {
         var_dump($request);
-        // $newCoder = new Coder($request["name"], $request["subject"]);
-        // $newCoder->save();
+         $newCoder = new Coder($request["name"], $request["subject"]);
+         $newCoder->save();
 
-        // $lastCoder = Coder::findLastCoder();
+         $lastCoder = Coder::findLastCoder();
         
-        // $lastCoder = [
-        //     "id" => $lastCoder->getId(),
-        //     "name" => $lastCoder->getName(),
-        //     "subject" => $lastCoder->getSubject(),
-        //     "createAt" => $lastCoder->getCreatedAt()
-        // ];
+         $lastCoder = [
+             "id" => $lastCoder->getId(),
+             "name" => $lastCoder->getName(),
+             "subject" => $lastCoder->getSubject(),
+             "createAt" => $lastCoder->getCreatedAt()
+         ];
         
-        // echo json_encode($lastCoder);
+         echo json_encode($lastCoder);
     }
 
     public function delete($id)
@@ -100,17 +106,29 @@ class ApiCodersController
     
     public function edit($id)
     {
+        
         $coderToEdit = Coder::findById($id);
-        new View("EditCoder", ["coder" => $coderToEdit]);
+
+        $coderArrayToEdit = [
+            "id"=>$coderToEdit->getId(),
+            "name"=>$coderToEdit->getName(),
+            "subject"=>$coderToEdit->getSubject(),
+            "createdat"=> $coderToEdit->getCreatedAt()
+        ];
+        
+       //new View("EditCoder", ["coder" => $coderToEdit]);
+        echo json_encode($coderArrayToEdit);
     }
 
     public function update(array $request, $id)
-    {
+    {   
         $coderToUpdate = Coder::findById($id);
+        var_dump($coderToUpdate->getName());
+        
         $coderToUpdate->rename($request["name"]);
         $coderToUpdate->editSubject($request["subject"]);
         $coderToUpdate->update();
-
-        $this->index();
+        
+        
     }
 }
