@@ -20,9 +20,8 @@ class ApiCodersController implements IWriteInFiles
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "store")) {
             $data = $_POST;
-            var_dump($data);
-            // $this->store($data);
-            // return;
+            $this->store($data);
+            return;
         }
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "edit")) {
@@ -91,6 +90,8 @@ class ApiCodersController implements IWriteInFiles
          ];
         
          echo json_encode($lastCoder);
+
+         $this->WriteInFiles("Coder Guardado: " . $lastCoder["name"]);
     }
 
     public function delete($id)
@@ -107,6 +108,8 @@ class ApiCodersController implements IWriteInFiles
         echo json_encode($coderDeleted);
 
         $coderToDelete->delete();
+
+        $this->WriteInFiles("Coder borrado: " . $id);
     }
     
     public function edit($id)
@@ -123,6 +126,8 @@ class ApiCodersController implements IWriteInFiles
         
        //new View("EditCoder", ["coder" => $coderToEdit]);
         echo json_encode($coderArrayToEdit);
+
+        $this->WriteInFiles("Coder Editado: " . $id);
     }
 
     public function update(array $request, $id)
@@ -133,6 +138,8 @@ class ApiCodersController implements IWriteInFiles
         $coderToUpdate->rename($request["name"]);
         $coderToUpdate->editSubject($request["subject"]);
         $coderToUpdate->update();
+
+        $this->WriteInFiles("Coder actualizado: " . $id);
         
         
     }

@@ -17,7 +17,7 @@ class Logger {
 
     public function getDate(){
 
-        $this->date = date ("d-m-y, h:m:s");
+        $this->date = date ("d-m-Y, H:i:s");
         return $this->date;
     }
 
