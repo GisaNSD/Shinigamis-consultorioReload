@@ -5,8 +5,10 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\Coder;
 use phpDocumentor\Reflection\Location; // QUE ES ESTO?
+use App\Domain\Contracts\IWriteInFiles;
+use App\Infrastructure\Logger;
 
-class ApiCodersController
+class ApiCodersController implements IWriteInFiles
 {
 
     public function __construct()
@@ -62,6 +64,8 @@ class ApiCodersController
         }
         
         echo json_encode($newCodersList);
+
+        WriteInLoggerFiles("Listando Coders");
         
     }
 
@@ -131,4 +135,5 @@ class ApiCodersController
         
         
     }
+
 }

@@ -41,13 +41,19 @@ class Logger {
         return $logfile;
     }
 
-    public function writeInFile(){
+    public function writeInFile($message){
 
         $logFile= $this-> openFile();
-        $data= fwrite($logFile, $this->getDate().$this->getMessage("Pepe").$this->getUserIP());
+        $data= fwrite($logFile, $this->getDate().$message.$this->getUserIP());
+        return $data;
+        $this->closeFile($logFile);
     }
 
+    public function closeFile($logFile){
+
+        fclose($logFile);
     }
+}
 
 
 
