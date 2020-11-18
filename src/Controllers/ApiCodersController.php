@@ -6,7 +6,7 @@ use App\Core\View;
 use App\Models\Coder;
 use phpDocumentor\Reflection\Location; // QUE ES ESTO?
 use App\Domain\Contracts\IWriteInFiles;
-use App\Infrastructure\Logger;
+use App\Infrastructure\Files\Logger;
 
 class ApiCodersController implements IWriteInFiles
 {
@@ -139,7 +139,7 @@ class ApiCodersController implements IWriteInFiles
 
     public function WriteInFiles($message){
 
-        $logger= new logger();
+        $logger= new Logger();
         $logger->writeInFile($message);
 
     }

@@ -17,7 +17,7 @@ class Logger {
 
     public function getDate(){
 
-        $this->date = date ("d-m-y hour: h:m:s");
+        $this->date = date ("d-m-y, h:m:s");
         return $this->date;
     }
 
@@ -44,7 +44,7 @@ class Logger {
     public function writeInFile($message){
 
         $logFile= $this-> openFile();
-        $data= fwrite($logFile, $this->getDate().$message.$this->getUserIP());
+        $data= fwrite($logFile, "\n". $this->getDate(). ' - ' .$message. ' - ' .$this->getUserIP());
         return $data;
         $this->closeFile($logFile);
     }
