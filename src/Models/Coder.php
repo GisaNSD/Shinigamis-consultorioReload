@@ -56,52 +56,6 @@ class Coder
         $this->subject = $subject;
     }
 
-    public function save(): void
-    {
-        $this->database->mysql->query("INSERT INTO `{$this->table}` (`name`, `subject`) VALUES ('$this->name', '$this->subject');");
-    }
-
-    public static function all()
-    {
-        $database = new Database();
-        $query = $database->mysql->query("select * FROM students_db");
-        $codersArray = $query->fetchAll();
-        $coderList = [];
-        foreach ($codersArray as $coder) {
-            $coderItem = new self($coder["name"], $coder["subject"], $coder["id"], $coder["created_at"]);
-            array_push($coderList, $coderItem);
-        }
-
-        return $coderList;
-    }
-
-    public function deleteById($id)
-    {
-        $query = $this->database->mysql->query("DELETE FROM `students_db` WHERE `students_db`.`id` = {$id}");
-    }
-
-    public function delete()
-    {
-        $query = $this->database->mysql->query("DELETE FROM `students_db` WHERE `students_db`.`id` = {$this->id}");
-    }
-
-    public static function findById($id): Coder
-    {
-        $database = new Database();
-        $query = $database->mysql->query("SELECT * FROM `students_db` WHERE `id` = {$id}");
-        $result = $query->fetchAll();
-
-        return new self($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
-    }
-
-    public static function findLastCoder(): Coder
-    {
-        $database = new Database();
-        $query = $database->mysql->query("SELECT * FROM `students_db` WHERE id=(SELECT max(id) FROM `students_db`)");
-        $result = $query->fetchAll();
-        return new self($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
-    }
-
     public function UpdateById($data, $id)
     {
         $this->database->mysql->query("UPDATE `students_db` SET `name` = '{$data["name"]}', `subject` = '{$data["subject"]}', WHERE `id` = {$id}"); 

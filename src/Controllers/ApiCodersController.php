@@ -7,6 +7,10 @@ use App\Models\Coder;
 use phpDocumentor\Reflection\Location;
 use App\Domain\Contracts\IWriteInFiles;
 use App\Infrastructure\Files\Logger;
+use App\Infrastructure\Repositories\DbMysql;
+use App\Domain\Services\DeleteCoder;
+use App\Domain\Services\ListAllCoders;
+use App\Domain\Services\StoreCoder;
 
 class ApiCodersController implements IWriteInFiles
 {
@@ -36,6 +40,7 @@ class ApiCodersController implements IWriteInFiles
 
         if (isset($_GET) && isset($_GET["action"]) && ($_GET["action"] == "delete")) {
 
+            var_dump($_GET["id"]);
             $this->delete($_GET["id"]);
             return;
         }
@@ -46,8 +51,10 @@ class ApiCodersController implements IWriteInFiles
 
     public function index(): void
     {
-        $codersList = Coder::all();
-                
+        $mySqlRepo= new DbMysql;
+        $service= new ListAllCoders($mySqlRepo);
+        $codersList= $service->execute(); 
+        
         $newCodersList =[];
 
         foreach ($codersList as $coder) {
@@ -76,16 +83,15 @@ class ApiCodersController implements IWriteInFiles
 
     public function store(array $request): void
     {
-         $newCoder = new Coder($request["name"], $request["subject"]);
-         $newCoder->save();
-
-         $lastCoder = Coder::findLastCoder();
-        
+        $mySqlRepo= new DbMysql;
+        $service= new StoreCoder($mySqlRepo);
+        $newCoder= $service->execute($request);
+     
          $lastCoder = [
-             "id" => $lastCoder->getId(),
-             "name" => $lastCoder->getName(),
-             "subject" => $lastCoder->getSubject(),
-             "createAt" => $lastCoder->getCreatedAt()
+             "id" => $newCoder->getId(),
+             "name" => $newCoder->getName(),
+             "subject" => $newCoder->getSubject(),
+             "createAt" => $newCoder->getCreatedAt()
          ];
         
          echo json_encode($lastCoder);
@@ -95,7 +101,9 @@ class ApiCodersController implements IWriteInFiles
 
     public function delete($id)
     {
-        $coderToDelete = Coder::findById($id);
+       $mySqlRepo= new DbMysql;
+       $service= new DeleteCoder($mySqlRepo);
+       $coderToDelete= $service->execute($id);
 
         $coderDeleted =  [
             "id" => $coderToDelete->getId(),
@@ -105,8 +113,6 @@ class ApiCodersController implements IWriteInFiles
         ];
         
         echo json_encode($coderDeleted);
-
-        $coderToDelete->delete();
 
         $this->WriteInFiles("Coder borrado: " . $id);
     }
@@ -123,7 +129,7 @@ class ApiCodersController implements IWriteInFiles
             "createdat"=> $coderToEdit->getCreatedAt()
         ];
         
-       //new View("EditCoder", ["coder" => $coderToEdit]);
+       new View("EditCoder", ["coder" => $coderToEdit]);
         echo json_encode($coderArrayToEdit);
 
         $this->WriteInFiles("Coder Editado: " . $id);

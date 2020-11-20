@@ -5,8 +5,8 @@ use App\Models\Coder;
 
 Interface IDbSelection
 {
-    //public function dbCreate($name, $subject);
-    // public function dbRead();
+    public function storeCoder(Coder $coder);
+    public function listAllCoders();
     // public function dbUpdate();
     public function coderDelete(Coder $coder);
 }
