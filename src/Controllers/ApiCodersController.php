@@ -10,6 +10,7 @@ use App\Infrastructure\Files\Logger;
 use App\Infrastructure\Repositories\DbMysql;
 use App\Domain\Services\DeleteCoder;
 use App\Domain\Services\ListAllCoders;
+use App\Domain\Services\StoreCoder;
 
 class ApiCodersController implements IWriteInFiles
 {
@@ -82,16 +83,15 @@ class ApiCodersController implements IWriteInFiles
 
     public function store(array $request): void
     {
-         $newCoder = new Coder($request["name"], $request["subject"]);
-         $newCoder->save();
-
-         $lastCoder = Coder::findLastCoder();
-        
+        $mySqlRepo= new DbMysql;
+        $service= new StoreCoder($mySqlRepo);
+        $newCoder= $service->execute($request);
+     
          $lastCoder = [
-             "id" => $lastCoder->getId(),
-             "name" => $lastCoder->getName(),
-             "subject" => $lastCoder->getSubject(),
-             "createAt" => $lastCoder->getCreatedAt()
+             "id" => $newCoder->getId(),
+             "name" => $newCoder->getName(),
+             "subject" => $newCoder->getSubject(),
+             "createAt" => $newCoder->getCreatedAt()
          ];
         
          echo json_encode($lastCoder);

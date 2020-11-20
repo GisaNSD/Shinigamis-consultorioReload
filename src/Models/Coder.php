@@ -56,19 +56,6 @@ class Coder
         $this->subject = $subject;
     }
 
-    public function save(): void
-    {
-        $this->database->mysql->query("INSERT INTO `{$this->table}` (`name`, `subject`) VALUES ('$this->name', '$this->subject');");
-    }
-
-    public static function findLastCoder(): Coder
-    {
-        $database = new Database();
-        $query = $database->mysql->query("SELECT * FROM `students_db` WHERE id=(SELECT max(id) FROM `students_db`)");
-        $result = $query->fetchAll();
-        return new self($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
-    }
-
     public function UpdateById($data, $id)
     {
         $this->database->mysql->query("UPDATE `students_db` SET `name` = '{$data["name"]}', `subject` = '{$data["subject"]}', WHERE `id` = {$id}"); 

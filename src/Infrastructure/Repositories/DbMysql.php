@@ -51,6 +51,18 @@ class DbMysql implements IDbSelection {
         return $coderList;
     }
 
+    public function storeCoder(Coder $coder)
+    {
+        $this->database->mysql->query("INSERT INTO `{$this->table}` (`name`, `subject`) VALUES ('{$coder->getName()}', '{$coder->getSubject()}');");
+    }
+
+    public function findLastCoder()
+    {
+        $query = $this->database->mysql->query("SELECT * FROM `students_db` WHERE id=(SELECT max(id) FROM `students_db`)");
+        $result = $query->fetchAll();
+        return new Coder($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
+    }
+
 };
 
 
