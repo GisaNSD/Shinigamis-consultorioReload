@@ -38,6 +38,19 @@ class DbMysql implements IDbSelection {
         return new Coder($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
     }
 
+    public function listAllCoders()
+    {
+        $query = $this->database->mysql->query("SELECT * FROM students_db");
+        $codersArray = $query->fetchAll();
+        $coderList = [];
+        foreach ($codersArray as $coder) {
+            $coderItem = new Coder($coder["name"], $coder["subject"], $coder["id"], $coder["created_at"]);
+            array_push($coderList, $coderItem);
+        }
+
+        return $coderList;
+    }
+
 };
 
 

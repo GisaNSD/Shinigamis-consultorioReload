@@ -9,6 +9,7 @@ use App\Domain\Contracts\IWriteInFiles;
 use App\Infrastructure\Files\Logger;
 use App\Infrastructure\Repositories\DbMysql;
 use App\Domain\Services\DeleteCoder;
+use App\Domain\Services\ListAllCoders;
 
 class ApiCodersController implements IWriteInFiles
 {
@@ -49,8 +50,10 @@ class ApiCodersController implements IWriteInFiles
 
     public function index(): void
     {
-        $codersList = Coder::all();
-                
+        $mySqlRepo= new DbMysql;
+        $service= new ListAllCoders($mySqlRepo);
+        $codersList= $service->execute(); 
+        
         $newCodersList =[];
 
         foreach ($codersList as $coder) {

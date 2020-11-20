@@ -61,32 +61,6 @@ class Coder
         $this->database->mysql->query("INSERT INTO `{$this->table}` (`name`, `subject`) VALUES ('$this->name', '$this->subject');");
     }
 
-    public static function all()
-    {
-        $database = new Database();
-        $query = $database->mysql->query("select * FROM students_db");
-        $codersArray = $query->fetchAll();
-        $coderList = [];
-        foreach ($codersArray as $coder) {
-            $coderItem = new self($coder["name"], $coder["subject"], $coder["id"], $coder["created_at"]);
-            array_push($coderList, $coderItem);
-        }
-
-        return $coderList;
-    }
-
-    public function deleteById($id)
-    {
-        $query = $this->database->mysql->query("DELETE FROM `students_db` WHERE `students_db`.`id` = {$id}");
-    }
-
-    public function delete()
-    {
-        $query = $this->database->mysql->query("DELETE FROM `students_db` WHERE `students_db`.`id` = {$this->id}");
-    }
-
-    
-
     public static function findLastCoder(): Coder
     {
         $database = new Database();
