@@ -17,9 +17,10 @@ class DeleteCoder{
 
     public function execute($id){
 
+        $coderToDelete= $this->repository->findById($id);
         $this->repository->coderDelete($id);
-        // $DbMysql= new DbMysql;
-        // $DbMysql->coderDelete($id);
+        return $coderToDelete;
+     
     }
     
 }

@@ -85,14 +85,7 @@ class Coder
         $query = $this->database->mysql->query("DELETE FROM `students_db` WHERE `students_db`.`id` = {$this->id}");
     }
 
-    public static function findById($id): Coder
-    {
-        $database = new Database();
-        $query = $database->mysql->query("SELECT * FROM `students_db` WHERE `id` = {$id}");
-        $result = $query->fetchAll();
-
-        return new self($result[0]["name"], $result[0]["subject"], $result[0]["id"], $result[0]["created_at"]);
-    }
+    
 
     public static function findLastCoder(): Coder
     {
